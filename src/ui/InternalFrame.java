@@ -114,7 +114,6 @@ public class InternalFrame extends javax.swing.JInternalFrame {
                
     }//GEN-LAST:event_saveMenuItemActionPerformed
 
-
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JMenu fileMenu;
     private ui.ImagePanel imagePanel;

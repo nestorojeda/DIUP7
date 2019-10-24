@@ -11,7 +11,6 @@ import java.awt.event.WindowEvent;
 import java.io.File;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
-import javax.swing.JInternalFrame;
 import javax.swing.JOptionPane;
 
 /**
@@ -130,19 +129,18 @@ public class ThresholdingUI extends javax.swing.JFrame {
     private void openMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_openMenuItemActionPerformed
         int returnVal = fileChooser.showOpenDialog(ThresholdingUI.this);
           if (returnVal == JFileChooser.APPROVE_OPTION) {
-            File file = fileChooser.getSelectedFile();
-            if(!"jpg".equals(getExtension(file))){
+            File f = fileChooser.getSelectedFile();
+            if(!"jpg".equals(getExtension(f))){
                 warningDialog("Debe ser un archivo .jpg");
-                openMenuItemActionPerformed(evt);
-                
+                openMenuItemActionPerformed(evt);               
             }else{
                 if(open){
                     desktop.removeAll();
                     desktop.repaint();
                 }
-                this.file = file;
-                createFrame(file);
-                System.out.println("Abriendo: " + file.getName() + "." );
+                this.file = f;
+                createFrame(f);
+                System.out.println("Abriendo: " + f.getName() + "." );
                 open = true;
                 
             }
@@ -164,7 +162,6 @@ public class ThresholdingUI extends javax.swing.JFrame {
     }
     
     protected void createModifiedFrame(File f, int t){
-        
         InternalFrame frame = new InternalFrame();
         frame.setImage(f);
         frame.setThreshold(t);
@@ -182,12 +179,11 @@ public class ThresholdingUI extends javax.swing.JFrame {
          int confirmed = JOptionPane.showConfirmDialog(null, "¿Desea cerrar el programa?", "Cerrar",JOptionPane.YES_NO_OPTION);
                 if (confirmed == JOptionPane.YES_OPTION) {
                     System.exit(0);
-                }else{
                 }
     }//GEN-LAST:event_exitMenuItemActionPerformed
 
     private void thresholdMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_thresholdMenuItemActionPerformed
-          if(!open){
+        if(!open){
             warningDialog("Primero debes abrir un archivo");
         }else{
             String s = (String) JOptionPane.showInputDialog(
