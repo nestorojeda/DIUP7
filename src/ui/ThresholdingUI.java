@@ -28,7 +28,7 @@ public class ThresholdingUI extends javax.swing.JFrame {
         addWindowListener(new WindowAdapter() {
             @Override
             public void windowClosing(WindowEvent e) {
-                int confirmed = JOptionPane.showConfirmDialog(null, "Do you really want to exit?", "Exit",JOptionPane.YES_NO_OPTION);
+                int confirmed = JOptionPane.showConfirmDialog(null, "¿Desea cerrar el programa?", "Cerrar",JOptionPane.YES_NO_OPTION);
                 if (confirmed == JOptionPane.YES_OPTION) {
                     setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
                 }else{
@@ -58,7 +58,7 @@ public class ThresholdingUI extends javax.swing.JFrame {
         thresholdMenuItem = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setTitle("Thresholding");
+        setTitle("Umbralizador");
         setMinimumSize(new java.awt.Dimension(800, 600));
         setPreferredSize(new java.awt.Dimension(1366, 768));
         setSize(new java.awt.Dimension(1366, 768));
@@ -76,9 +76,10 @@ public class ThresholdingUI extends javax.swing.JFrame {
 
         menuBar.setMinimumSize(new java.awt.Dimension(800, 600));
 
-        fileMenu.setText("File");
+        fileMenu.setText("Archivo");
 
-        openMenuItem.setText("Open");
+        openMenuItem.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_A, java.awt.event.InputEvent.CTRL_MASK));
+        openMenuItem.setText("Abrir");
         openMenuItem.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 openMenuItemActionPerformed(evt);
@@ -86,7 +87,8 @@ public class ThresholdingUI extends javax.swing.JFrame {
         });
         fileMenu.add(openMenuItem);
 
-        exitMenuItem.setText("Exit");
+        exitMenuItem.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_S, java.awt.event.InputEvent.CTRL_MASK));
+        exitMenuItem.setText("Salir");
         exitMenuItem.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 exitMenuItemActionPerformed(evt);
@@ -96,9 +98,10 @@ public class ThresholdingUI extends javax.swing.JFrame {
 
         menuBar.add(fileMenu);
 
-        editMenu.setText("Edit");
+        editMenu.setText("Editar");
 
-        thresholdMenuItem.setText("Threshold");
+        thresholdMenuItem.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_U, java.awt.event.InputEvent.CTRL_MASK));
+        thresholdMenuItem.setText("Umbralizar");
         thresholdMenuItem.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 thresholdMenuItemActionPerformed(evt);
@@ -129,7 +132,7 @@ public class ThresholdingUI extends javax.swing.JFrame {
           if (returnVal == JFileChooser.APPROVE_OPTION) {
             File file = fileChooser.getSelectedFile();
             if(!"jpg".equals(getExtension(file))){
-                warningDialog("Must be a .jpg image");
+                warningDialog("Debe ser un archivo .jpg");
                 openMenuItemActionPerformed(evt);
                 
             }else{
@@ -139,12 +142,12 @@ public class ThresholdingUI extends javax.swing.JFrame {
                 }
                 this.file = file;
                 createFrame(file);
-                System.out.println("Opening: " + file.getName() + "." );
+                System.out.println("Abriendo: " + file.getName() + "." );
                 open = true;
                 
             }
         } else {
-            System.out.println("Open command cancelled by user.");
+            System.out.println("Operacion cancelada por el usuario");
         }
         
         
@@ -176,7 +179,7 @@ public class ThresholdingUI extends javax.swing.JFrame {
     
     
     private void exitMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_exitMenuItemActionPerformed
-         int confirmed = JOptionPane.showConfirmDialog(null, "Do you really want to exit?", "Exit",JOptionPane.YES_NO_OPTION);
+         int confirmed = JOptionPane.showConfirmDialog(null, "¿Desea cerrar el programa?", "Cerrar",JOptionPane.YES_NO_OPTION);
                 if (confirmed == JOptionPane.YES_OPTION) {
                     System.exit(0);
                 }else{
@@ -185,24 +188,24 @@ public class ThresholdingUI extends javax.swing.JFrame {
 
     private void thresholdMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_thresholdMenuItemActionPerformed
           if(!open){
-            warningDialog("Please, open a file");
+            warningDialog("Primero debes abrir un archivo");
         }else{
             String s = (String) JOptionPane.showInputDialog(
-                    this,"Threshold value:",
-                    "Insert a positive integer",
+                    this,"Valor del umbral:",
+                    "Introduzca un entero positivo",
                     JOptionPane.PLAIN_MESSAGE,
                     null,
                     null, "");
             if(s == null) return;
             if(isNumeric(s)){
                 if(Integer.valueOf(s) > 255){
-                    warningDialog("Must be an integer betweeem 0 and 255");                  
+                    warningDialog("Debe ser un entero entre 0 y 255");                  
                     thresholdMenuItemActionPerformed(evt);
                     return;
                 }
                 createModifiedFrame(file, Integer.valueOf(s));
             }else{
-                warningDialog("Must be an integer betweeem 0 and 255");
+                warningDialog("Debe ser un entero entre 0 y 255");
                 thresholdMenuItemActionPerformed(evt);
             }
         
