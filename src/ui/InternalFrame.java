@@ -7,6 +7,11 @@ package ui;
 
 import java.awt.Dimension;
 import java.io.File;
+import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.imageio.ImageIO;
+import javax.swing.JFileChooser;
 
 /**
  *
@@ -20,6 +25,7 @@ public class InternalFrame extends javax.swing.JInternalFrame {
     public InternalFrame() {
         initComponents();
         setResizable(true);
+        menuBar.setVisible(false);
     }
     
     public void setImage(File f){
@@ -29,6 +35,7 @@ public class InternalFrame extends javax.swing.JInternalFrame {
     }
     
     public void setThreshold(int i){
+        menuBar.setVisible(true);
         imagePanel.thresholding(i);
     }
     
@@ -44,6 +51,9 @@ public class InternalFrame extends javax.swing.JInternalFrame {
     private void initComponents() {
 
         imagePanel = new ui.ImagePanel();
+        menuBar = new javax.swing.JMenuBar();
+        fileMenu = new javax.swing.JMenu();
+        saveMenuItem = new javax.swing.JMenuItem();
 
         javax.swing.GroupLayout imagePanelLayout = new javax.swing.GroupLayout(imagePanel);
         imagePanel.setLayout(imagePanelLayout);
@@ -53,8 +63,22 @@ public class InternalFrame extends javax.swing.JInternalFrame {
         );
         imagePanelLayout.setVerticalGroup(
             imagePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 256, Short.MAX_VALUE)
+            .addGap(0, 239, Short.MAX_VALUE)
         );
+
+        fileMenu.setText("Archivo");
+
+        saveMenuItem.setText("Guardar");
+        saveMenuItem.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                saveMenuItemActionPerformed(evt);
+            }
+        });
+        fileMenu.add(saveMenuItem);
+
+        menuBar.add(fileMenu);
+
+        setJMenuBar(menuBar);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -76,8 +100,25 @@ public class InternalFrame extends javax.swing.JInternalFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void saveMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveMenuItemActionPerformed
+        JFileChooser fileChooser = new JFileChooser();
+        int retrival = fileChooser.showSaveDialog(null);
+        if (retrival == JFileChooser.APPROVE_OPTION) {
+            File f = new File(fileChooser.getSelectedFile()+".jpg");
+            try {
+                ImageIO.write(imagePanel.getImage(), "jpg", f);
+            } catch (IOException ex) {
+                Logger.getLogger(InternalFrame.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+               
+    }//GEN-LAST:event_saveMenuItemActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JMenu fileMenu;
     private ui.ImagePanel imagePanel;
+    private javax.swing.JMenuBar menuBar;
+    private javax.swing.JMenuItem saveMenuItem;
     // End of variables declaration//GEN-END:variables
 }
