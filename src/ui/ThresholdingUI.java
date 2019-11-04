@@ -55,6 +55,8 @@ public class ThresholdingUI extends javax.swing.JFrame {
         exitMenuItem = new javax.swing.JMenuItem();
         editMenu = new javax.swing.JMenu();
         thresholdMenuItem = new javax.swing.JMenuItem();
+        helpMenu = new javax.swing.JMenu();
+        aboutMe = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Umbralizador");
@@ -109,6 +111,18 @@ public class ThresholdingUI extends javax.swing.JFrame {
         editMenu.add(thresholdMenuItem);
 
         menuBar.add(editMenu);
+
+        helpMenu.setText("Ayuda");
+
+        aboutMe.setText("Acerca de");
+        aboutMe.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                aboutMeActionPerformed(evt);
+            }
+        });
+        helpMenu.add(aboutMe);
+
+        menuBar.add(helpMenu);
 
         setJMenuBar(menuBar);
 
@@ -208,6 +222,14 @@ public class ThresholdingUI extends javax.swing.JFrame {
           }
     }//GEN-LAST:event_thresholdMenuItemActionPerformed
 
+    private void aboutMeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_aboutMeActionPerformed
+        JOptionPane.showMessageDialog(this,
+                "Desarrollado por Daniel Delgado Perera y Néstor Ojeda González\n"
+                + "Versión 1.0",
+                "Acerca de mí",
+        JOptionPane.PLAIN_MESSAGE);
+    }//GEN-LAST:event_aboutMeActionPerformed
+
     private boolean open = false;
     private File file;
     
@@ -265,11 +287,13 @@ public class ThresholdingUI extends javax.swing.JFrame {
     
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JMenuItem aboutMe;
     private javax.swing.JDesktopPane desktop;
     private javax.swing.JMenu editMenu;
     private javax.swing.JMenuItem exitMenuItem;
     private javax.swing.JFileChooser fileChooser;
     private javax.swing.JMenu fileMenu;
+    private javax.swing.JMenu helpMenu;
     private javax.swing.JMenuBar menuBar;
     private javax.swing.JMenuItem openMenuItem;
     private javax.swing.JMenuItem thresholdMenuItem;

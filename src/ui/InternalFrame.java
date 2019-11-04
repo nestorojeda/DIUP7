@@ -6,12 +6,19 @@
 package ui;
 
 import java.awt.Dimension;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.io.File;
 import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.imageio.ImageIO;
 import javax.swing.JFileChooser;
+import javax.swing.JFrame;
+import javax.swing.JInternalFrame;
+import javax.swing.JOptionPane;
+import javax.swing.event.InternalFrameAdapter;
+import javax.swing.event.InternalFrameEvent;
 
 /**
  *
@@ -26,6 +33,20 @@ public class InternalFrame extends javax.swing.JInternalFrame {
         initComponents();
         setResizable(true);
         menuBar.setVisible(false);
+        
+        this.addInternalFrameListener(new InternalFrameAdapter() {
+            
+            @Override
+            public void internalFrameClosing(InternalFrameEvent e) {
+                int confirmed = JOptionPane.showConfirmDialog(null, "¿Desea cerrar la ventana?\nPerderá la imagen si no la ha guardado", "Cerrar",JOptionPane.YES_NO_OPTION);
+                if (confirmed == JOptionPane.YES_OPTION) {
+                    setDefaultCloseOperation(JInternalFrame.DISPOSE_ON_CLOSE);
+                }else{
+                    setDefaultCloseOperation(JInternalFrame.DO_NOTHING_ON_CLOSE);
+                }
+            }
+        });
+        
     }
     
     public void setImage(File f){
@@ -37,6 +58,7 @@ public class InternalFrame extends javax.swing.JInternalFrame {
     public void setThreshold(int i){
         menuBar.setVisible(true);
         imagePanel.thresholding(i);
+        this.setClosable(true);
     }
     
     
